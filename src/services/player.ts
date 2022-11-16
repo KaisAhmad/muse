@@ -135,6 +135,7 @@ export default class {
     this.voiceConnection.subscribe(this.audioPlayer);
     this.audioPlayer.play(createAudioResource(stream, {
       inputType: StreamType.WebmOpus,
+      inlineVolume: true,
     }));
     this.attachListeners();
     this.startTrackingPosition(positionSeconds);
@@ -200,6 +201,7 @@ export default class {
       this.voiceConnection.subscribe(this.audioPlayer);
       const resource = createAudioResource(stream, {
         inputType: StreamType.WebmOpus,
+        inlineVolume: true,
       });
 
       this.audioPlayer.play(resource);
@@ -520,6 +522,19 @@ export default class {
 
   private onVoiceConnectionDisconnect(): void {
     this.disconnect();
+  }
+
+  //volume to retrieve the current volume with optioanl new volume
+  volume(volume?: number): any {
+    return this.audioPlayer?.state.resource.volume = 1;
+    //set volume to 5
+    if (volume) {
+      // this.audioPlayer?.state.resource.volume
+      // this.audioPlayer?.state.resource.volume.setVolume(volume);
+      return this.audioPlayer?.state.resource.volume.setVolume(volume);
+    } else {
+      return this.audioPlayer?.state.resource.volume;
+    }
   }
 
   private async onAudioPlayerIdle(_oldState: AudioPlayerState, newState: AudioPlayerState): Promise<void> {

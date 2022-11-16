@@ -36,6 +36,7 @@ export default class {
   public async register(): Promise<void> {
     // Load in commands
     for (const command of container.getAll<Command>(TYPES.Command)) {
+      console.log(command.slashCommand.name);
       // Make sure we can serialize to JSON without errors
       try {
         command.slashCommand.toJSON();
