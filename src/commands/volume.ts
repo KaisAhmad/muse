@@ -29,9 +29,7 @@ export default class implements Command {
       await interaction.reply({content: 'No player found', ephemeral: true});
       return;
     }
-
-    console.log(player.voiceConnection);
-
+    
     // Check if bot is in a voice channel
     if (!player.voiceConnection) {
       await interaction.reply({content: 'I am not in a voice channel', ephemeral: true});

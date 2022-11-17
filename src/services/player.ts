@@ -68,6 +68,7 @@ export default class {
   private nowPlaying: QueuedSong | null = null;
   private playPositionInterval: NodeJS.Timeout | undefined;
   private lastSongURL = '';
+  private volumeOfBot = 0.1;
 
   private positionInSeconds = 0;
   private readonly fileCache: FileCacheProvider;
@@ -137,6 +138,9 @@ export default class {
       inputType: StreamType.WebmOpus,
       inlineVolume: true,
     }));
+
+    this.audioPlayer?.state.resource.volume.setVolume(this.volumeOfBot);
+
     this.attachListeners();
     this.startTrackingPosition(positionSeconds);
 
@@ -203,6 +207,8 @@ export default class {
         inputType: StreamType.WebmOpus,
         inlineVolume: true,
       });
+
+      resource.volume?.setVolume(this.volumeOfBot);
 
       this.audioPlayer.play(resource);
 
@@ -529,6 +535,7 @@ export default class {
     // Set volume to 5
     if (volume) {
       this.audioPlayer?.state.resource.volume.setVolume(volume);
+      this.volumeOfBot = volume;
       return this.audioPlayer?.state.resource.volume;
     }
 
